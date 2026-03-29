@@ -76,9 +76,9 @@ async function updateData() {
 
     console.log("Updated:", lastUpdate, "Events:", cache.length);
 
-  } catch (e) {
-    console.log("Update error:", e.message);
-  }
+  catch (e) {
+  console.log("FULL ERROR:", e.response?.data || e.message);
+}
 }
 
 // первый запуск
@@ -101,4 +101,14 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("API started on port", PORT);
+});
+
+app.get("/test", async (req, res) => {
+  try {
+    const url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=1";
+    const response = await axios.get(url);
+    res.json(response.data);
+  } catch (e) {
+    res.json({ error: e.message });
+  }
 });
