@@ -1,3 +1,11 @@
+process.on("uncaughtException", err => {
+  console.error("UNCAUGHT:", err);
+});
+
+process.on("unhandledRejection", err => {
+  console.error("UNHANDLED:", err);
+});
+
 const express = require("express");
 const axios = require("axios");
 
@@ -82,7 +90,7 @@ async function updateData() {
 }
 
 // первый запуск
-updateData();
+setTimeout(updateData, 2000);
 
 // каждые 10 минут
 setInterval(updateData, 600000);
@@ -99,16 +107,23 @@ app.get("/earthquakes", (req, res) => {
 // порт для Railway
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log("API started on port", PORT);
 });
 
-app.get("/test", async (req, res) => {
-  try {
-    const url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=1";
-    const response = await axios.get(url);
-    res.json(response.data);
-  } catch (e) {
-    res.json({ error: e.message });
-  }
+const express = require("express");
+const app = express();
+
+// защита
+process.on("uncaughtException", err => console.error(err));
+process.on("unhandledRejection", err => console.error(err));
+
+// тест
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
+
+// API
+app.get("/earthquakes", (req, res) => {
+  res.json({ ok: true });
 });
