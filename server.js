@@ -30,9 +30,9 @@ async function fetchKazakhstan() {
 
 // 🔄 fallback (если в КЗ нет событий)
 async function fetchFallback() {
-  const url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&limit=50";
+  const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minlatitude=${KZ_BOUNDS.minLat}&maxlatitude=${KZ_BOUNDS.maxLat}&minlongitude=${KZ_BOUNDS.minLon}&maxlongitude=${KZ_BOUNDS.maxLon}&orderby=time&limit=200`;
 
-  const res = await axios.get(url);
+  const res = await axios.get(url, { timeout: 5000 });
   return res.data.features;
 }
 
@@ -60,10 +60,11 @@ async function updateData() {
     let features = await fetchKazakhstan();
 
     // ⚠️ если пусто — fallback
-    if (!features || features.length === 0) {
-      console.log("No KZ data → using fallback");
-      features = await fetchFallback();
-    }
+    if (!features || features.length < 3) {
+  console.log("Too few KZ events → using fallback");
+  const fallback = await fetchFallback();
+  features = [...features, ...fallback].slice(0, 50);
+}
 
     const formatted = formatData(features);
 
