@@ -1,12 +1,21 @@
 {
-  "menu.about": "About the center",
-  "menu.activity": "Activities",
+  "logo": "https://novamedia-prog.github.io/logo-english.png",
+
+  "menu.home": "Home",
+  "menu.about": "About",
+  "menu.activity": "Activity",
   "menu.labs": "Laboratories",
   "menu.info": "Information",
+  "menu.news": "News",
   "menu.contacts": "Contacts",
+  "menu.operational": "Operational Info",
 
-  "hero.title": "Advanced research for a sustainable future",
-  "hero.subtitle": "LLP “National Center for Seismological Observations and Research” is the leading institution of the Republic of Kazakhstan in seismology, geophysics and seismic hazard assessment.",
-  "hero.services": "Our services",
-  "hero.contact": "Contact us"
+  "hero.title": "Seismology Research Center",
+  "hero.subtitle": "Research and monitoring of seismic activity in Kazakhstan",
+  "hero.button": "Learn more",
+
+  "footer.address": "Address: Kazakhstan, Astana",
+  "footer.phone": "Phone: +7 (000) 000-00-00",
+  "footer.email": "E-mail: info@seismology.kz",
+  "footer.rights": "All rights reserved"
 }
